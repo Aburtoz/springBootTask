@@ -29,14 +29,15 @@ public class UserController {
                             .object(null)
                             .build()
                     ,HttpStatus.OK);
-        }else {
-            return new ResponseEntity<>(
+        }
+
+        return new ResponseEntity<>(
                     MensageResponse.builder()
                             .mensaje("Satisfactory action")
                             .object(getList)
                             .build()
                     ,HttpStatus.OK);
-        }
+
 
     }
 

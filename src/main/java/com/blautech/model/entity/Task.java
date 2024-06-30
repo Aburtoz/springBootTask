@@ -1,8 +1,10 @@
 package com.blautech.model.entity;
 import jakarta.persistence.*;
 import lombok.*;
+
 import java.io.Serializable;
 import java.util.Date;
+
 
 @Data
 @AllArgsConstructor
@@ -10,22 +12,27 @@ import java.util.Date;
 @ToString
 @Builder
 @Entity
-@Table(name = "user")
-public class User implements Serializable {
+@Table(name = "task")
+public class Task implements Serializable {
+
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(name = "username")
-    private String username;
+    @Column(name = "titulo")
+    private String titulo;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "nombre")
-    private String nombre;
+    @Column(name = "estado")
+    private int estado;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User userId;
 
     @Column(name = "pasivo")
     private Boolean pasivo;
@@ -35,6 +42,4 @@ public class User implements Serializable {
 
     @Column(name = "updated_at")
     private Date updatedAt;
-
-
 }
