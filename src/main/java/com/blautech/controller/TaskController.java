@@ -2,8 +2,10 @@ package com.blautech.controller;
 
 import com.blautech.model.dto.TaskDto;
 import com.blautech.model.entity.Task;
+import com.blautech.model.entity.User;
 import com.blautech.model.payload.MensageResponse;
 import com.blautech.service.ITaskService;
+import com.blautech.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class TaskController {
 
     @Autowired
     private ITaskService taskService;
+
+    @Autowired
+    private IUserService userService;
 
     @GetMapping("tasks")
     public ResponseEntity<?> getAllTasks(){
@@ -164,6 +170,31 @@ public class TaskController {
                                     .createdAt(task.getCreatedAt())
                                     .updatedAt(task.getUpdatedAt())
                                     .build())
+                            .build()
+                    ,HttpStatus.OK);
+        }
+    }
+
+    @GetMapping("task/user/{idUser}")
+    public ResponseEntity<?> findByUser(@PathVariable Integer idUser) {
+
+        User user = userService.findById(idUser);
+        List<Task> listTask = taskService.findByUser(user);
+
+        if(listTask.isEmpty()){
+
+            return new ResponseEntity<>(
+                    MensageResponse.builder()
+                            .mensaje("No data")
+                            .object(null)
+                            .build()
+                    ,HttpStatus.INTERNAL_SERVER_ERROR);
+        }else{
+
+            return new ResponseEntity<>(
+                    MensageResponse.builder()
+                            .mensaje("Task found")
+                            .object(listTask)
                             .build()
                     ,HttpStatus.OK);
         }

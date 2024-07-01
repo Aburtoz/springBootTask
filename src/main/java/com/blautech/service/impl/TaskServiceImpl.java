@@ -8,7 +8,9 @@ import com.blautech.model.entity.Task;
 import com.blautech.model.entity.User;
 import com.blautech.service.ITaskService;
 import com.blautech.service.IUserService;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,6 +55,12 @@ public class TaskServiceImpl implements ITaskService {
     public Task findById(Integer id) {
         return taskDao.findById(id).orElse(null);
     }
+
+    @Override
+    public List<Task> findByUser(User user) {
+        return taskDao.findByUser(user);
+    }
+
 
     @Override
     public void delete(Task task) {
