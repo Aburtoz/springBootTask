@@ -28,6 +28,7 @@ public class UserServiceImpl implements IUserService {
     public User save(UserDto userDto) {
         User newUser = User.builder()
                             .id(userDto.getId())
+                            .nombre(userDto.getNombre())
                             .username(userDto.getUsername())
                             .password(userDto.getPassword())
                             .createdAt(userDto.getCreatedAt())

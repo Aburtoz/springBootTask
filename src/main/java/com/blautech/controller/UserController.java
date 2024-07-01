@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1")
+@CrossOrigin(origins = "http://localhost:4200/")
 public class UserController {
 
     @Autowired
@@ -51,6 +52,7 @@ public class UserController {
                             .mensaje("Saved successfully")
                             .object(UserDto.builder()
                                     .id(userSave.getId())
+                                    .nombre(userSave.getNombre())
                                     .username(userSave.getUsername())
                                     .password(userSave.getPassword())
                                     .createdAt(userSave.getCreatedAt())
